@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import App from './App.vue'
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import App from './App.vue'
+import router from './router'
 
 extend("min", {
   validate(val, args) {
@@ -14,5 +15,6 @@ extend("min", {
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  router,               // Add this line
+  render: h => h(App)
 }).$mount('#app')
