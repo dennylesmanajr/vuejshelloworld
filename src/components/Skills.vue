@@ -11,14 +11,18 @@
           <input type="text" placeholder="Enter a skill" v-model="skill"/>
           
           <!-- <input type="checkbox" id="checkbox" v-model="checked" /> -->
-          <p :class="{ alert: errors[0], hidden: !errors[0] }">
+          <transition name="alert-in" enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
+          <p v-if="errors[0]" :class="{ alert: errors[0], hidden: !errors[0] }">
             {{ errors[0] }}
             </p>
+          </transition>
          </ValidationProvider>
       </form>
       </ValidationObserver>
       <ul>
-        <li v-for="(data,index) in skills" :key='index'>{{data.skill}}</li>
+        <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+          <li v-for="(data,index) in skills" :key='index'>{{data.skill}}</li>
+        </transition-group>
       </ul>
 
       <!-- <p v-if="skills.length >= 2">You have more than 1 skills</p>
@@ -103,6 +107,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
   .alert{
     background-color: yellow;
     width: 100%;
@@ -161,4 +166,26 @@ export default {
     padding: 5px;
     margin-top: -20px;
   }
+
+  .alert-in-enter-active {
+    animation: bounce-in .5s;
+
+  }
+
+  .alert-in-leave-active {
+    animation: bounce-in .5s reverse;
+
+  }
+
+  @keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
